@@ -7,11 +7,14 @@ import xbmcaddon
 import os
 
 from sqlite3 import dbapi2 as sqlite
-DB = os.path.join(xbmc.translatePath("special://userdata/Database"), 'Textures13.db')
-db = sqlite.connect(DB)
-db.execute('Delete FROM texture WHERE url LIKE "%seirsanduk%"')
-db.commit()
-db.close()
+try:
+	DB = os.path.join(xbmc.translatePath("special://userdata/Database"), 'Textures13.db')
+	db = sqlite.connect(DB)
+	db.execute('Delete FROM texture WHERE url LIKE "%seirsanduk%"')
+	db.commit()
+	db.close()
+except:
+	pass
 
 BASE = "http://www.seirsanduk.com/"
 
