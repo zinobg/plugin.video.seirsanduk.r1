@@ -8,7 +8,7 @@ It is tested as well on Kodi for Windows
 
 How to install:
 
-1. Copy the zip file plugin.video.seirsanduk.r1.zip to a directory Kodi server has access to 
+1. Copy the zip file plugin.video.seirsanduk.r1.zip to a directory, where Kodi server has access to
 	Windows -> <USERDIR>\AppData\Roaming\XBMC\addons\packages\ 
 	Linux/OpenElec/LibreElec -> ~/.kodi/addons/packages/
 2. Run Kodi and go to System -> Add-ons
