@@ -16,5 +16,6 @@
    <disclaimer lang="en">-</disclaimer>
    <website>http://www.seirsanduk.com/</website>
    <platform>all</platform>
+   <source>https://github.com/zinobg/plugin.video.seirsanduk.r1</source>
   </extension>
 </addon>
