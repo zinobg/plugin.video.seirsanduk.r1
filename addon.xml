@@ -13,7 +13,7 @@
    <summary lang="en">Video plugin for www.seirsanduk.com http://www.seirsanduk.com/</summary>
    <language>en</language>
    <description lang="en">Video plugin for http://www.seirsanduk.com/</description>
-   <disclaimer lang="en">-</disclaimer>
+   <disclaimer lang="en">This plugin provides access to tv streams from http://www.seirsanduk.com/.</disclaimer>
    <website>http://www.seirsanduk.com/</website>
    <platform>all</platform>
    <source>https://github.com/zinobg/plugin.video.seirsanduk.r1</source>
