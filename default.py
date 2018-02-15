@@ -24,6 +24,7 @@ def INDEX_CHANNELS(name,url):
     source=response.read()
     response.close()
     match=re.compile('file:"(.+?)"').findall(source)
+    name='PLAY: '+name
     for url in match:
         addLink(name,url,'')	
 		
