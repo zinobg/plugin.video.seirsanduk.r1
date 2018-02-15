@@ -6,7 +6,7 @@ BASE='http://www.seirsanduk.com/'
 
 def LIST_CHANNELS():
     req=urllib2.Request(BASE)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0')
     response=urllib2.urlopen(req)
     source=response.read()
     response.close()
@@ -18,7 +18,6 @@ def LIST_CHANNELS():
 def INDEX_CHANNELS(name,url):
     url = BASE + url
     req=urllib2.Request(url)
-    #req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0')
     response=urllib2.urlopen(req)
     source=response.read()
