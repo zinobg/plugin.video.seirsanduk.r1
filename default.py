@@ -52,14 +52,6 @@ def addLink(name,url,iconimage):
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
     return ok
 
-def playLink(name,url):
-    ok=True
-    liz=xbmcgui.ListItem(name,iconImage="DefaultVideo.png",thumbnailImage='')
-    liz.setInfo(type="Video", infoLabels={ "Title": name })
-    liz.setProperty('IsPlayable','true')
-    ok=xbmc.Player().play(url,liz)
-    return ok
-
 def addDir(name,url,mode,iconimage):
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
     ok=True
