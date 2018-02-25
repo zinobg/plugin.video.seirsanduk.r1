@@ -15,3 +15,5 @@ How to install:
 3. From Add-ons menu select -> Install from zip file
 4. Select the zip file plugin.video.seirsanduk.r1.zip
 5. SEIRSANDUK R1 add-on will appear in the video addon list
+6. Before you run it you have to provide login information 
+	For this select the addon in the list and the PC use right mouse button. On AppleTV long press Menu on the remote control
