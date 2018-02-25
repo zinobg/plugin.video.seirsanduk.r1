@@ -1,27 +1,24 @@
 import re,os
 import urllib2,urllib
 import xbmcplugin,xbmcgui,xbmcaddon
+import weblogin
 
-BASE='http://www.seirsanduk.com/'
+username=xbmcaddon.Addon().getSetting('username')
+password=xbmcaddon.Addon().getSetting('password')
+
+BASE='http://www.seirsanduk.com/login/'
 
 def LIST_CHANNELS():
-    req=urllib2.Request(BASE)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0')
-    response=urllib2.urlopen(req)
-    source=response.read()
-    response.close()
-    match=re.compile('<li><a href="(.+?)"><img src="(.+?)".*>(.+?)</a></li>').findall(source)
+    source=weblogin.doLogin('',username,password,BASE)
+    match=re.compile('<li><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
     for url,thumbnail,name in match:
         thumbnail=BASE+thumbnail
         addDir(name,url,1,thumbnail)
 
 def INDEX_CHANNELS(name,url):
     url = BASE + url
-    req=urllib2.Request(url)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0')
-    response=urllib2.urlopen(req)
-    source=response.read()
-    response.close()
+    xbmc.log(url+username+password)
+    source=weblogin.doLogin('',username,password,url)
     match=re.compile('file:"(.+?)"').findall(source)
     name='PLAY: '+name
     for url in match:
