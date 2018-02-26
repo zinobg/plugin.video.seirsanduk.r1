@@ -1,25 +1,38 @@
-import re,os
-import urllib2,urllib
+# -*- coding: utf-8 -*-
+import re,os,urllib2,urllib
 import xbmcplugin,xbmcgui,xbmcaddon
 import weblogin
 
+# Getting username and password from addon settings
 username=xbmcaddon.Addon().getSetting('username')
 password=xbmcaddon.Addon().getSetting('password')
 
-BASE='http://www.seirsanduk.com/login/'
+BASE='http://www.seirsanduk.com/'
+
+# checks if user is logging from Bulgaria 
+req=urllib2.Request(BASE)
+req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0')
+response=urllib2.urlopen(req)
+source=response.read()
+response.close()
+if 'loginbg' in source:
+    login='loginbg/'
+else:
+    login='login/'
+BASE=BASE+login
 
 def LIST_CHANNELS():
-    source=weblogin.doLogin('',username,password,BASE)
+    url=BASE+'index.php'
+    source=weblogin.doLogin('',username,password,url)
     match=re.compile('<li><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
-    for url,thumbnail,name in match:
+    for url_chann,thumbnail,name in match:
+        url_chann=url+url_chann
         thumbnail=BASE+thumbnail
-        addDir(name,url,1,thumbnail)
+        addDir(name,url_chann,1,thumbnail)
 
 def INDEX_CHANNELS(name,url):
-    url = BASE + url
-    xbmc.log(url+username+password)
-    source=weblogin.doLogin('',username,password,url)
-    match=re.compile('file:"(.+?)"').findall(source)
+    channel_source=weblogin.doLogin('',username,password,url)
+    match=re.compile('file:"(.+?)"').findall(channel_source)
     name='PLAY: '+name
     for url in match:
         addLink(name,url,'')	
@@ -43,8 +56,8 @@ def get_params():
 
 def addLink(name,url,iconimage):
     ok=True
-    liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-    liz.setInfo( type="Video", infoLabels={ "Title": name } )
+    liz=xbmcgui.ListItem(name,iconImage="DefaultVideo.png",thumbnailImage=iconimage)
+    liz.setInfo(type="Video",infoLabels={"Title":name})
     liz.setProperty('IsPlayable','true')
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
     return ok
@@ -63,17 +76,17 @@ name=None
 mode=None
 
 try:
-        url=urllib.unquote_plus(params["url"])
+    url=urllib.unquote_plus(params["url"])
 except:
-        pass
+    pass
 try:
-        name=urllib.unquote_plus(params["name"])
+    name=urllib.unquote_plus(params["name"])
 except:
-        pass
+    pass
 try:
-        mode=int(params["mode"])
+    mode=int(params["mode"])
 except:
-        pass
+    pass
 
 xbmc.log("Mode: "+str(mode))
 xbmc.log("URL: "+str(url))
