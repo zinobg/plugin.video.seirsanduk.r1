@@ -10,10 +10,10 @@
   <extension point="xbmc.addon.metadata">
    <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 3</license>
-   <summary lang="en">Video plugin for www.seirsanduk.com http://www.seirsanduk.com/</summary>
+   <summary lang="en">Video plugin for www.seirsanduk.com http://www.seirsanduk.com/. A free account is required.</summary>
    <language>en</language>
    <description lang="en">Video plugin for http://www.seirsanduk.com/</description>
-   <disclaimer lang="en">This plugin provides access to tv streams from http://www.seirsanduk.com/. You require a free account from http://www.seirsanduk.com/</disclaimer>
+   <disclaimer lang="en">This plugin provides access to tv streams from http://www.seirsanduk.com/. A free account is required.</disclaimer>
    <website>http://www.seirsanduk.com/</website>
    <platform>all</platform>
    <source>https://github.com/zinobg/plugin.video.seirsanduk.r1</source>
