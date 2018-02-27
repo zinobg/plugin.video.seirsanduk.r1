@@ -1,7 +1,7 @@
 # seirsanduk
 Video plugin for http://www.seirsanduk.com/. Free account is required.
 
-Readme for Kodi seirsanduk.r1 plugin created zinobg@gmail.com
+Readme for Kodi seirsanduk.r1 plugin created zinobg [at] gmail.com
 
 I created this addon to be able to watch online TV via Kodi on my Raspberry pi3. 
 It is tested as well on Kodi for Windows
