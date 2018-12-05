@@ -9,53 +9,52 @@ password=xbmcaddon.Addon().getSetting('password')
 
 BASE='http://www.seirsanduk.com/'
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
-
-def openUrl(url):
-    req=urllib2.Request(url)
-    req.add_header('User-Agent',header_string)
-    response=urllib2.urlopen(req)
-    source=response.read()
-    response.close()
-    return source
+#login='login/'
 
 # checks if user is logging from Bulgaria 
-source_main=openUrl(BASE)
-if 'loginbg' in source_main:
-    login='loginbg/'
-else:
-    login='login/'
-BASE_LOG=BASE+login
+#source_main=weblogin.openUrl(BASE)
+#BASE_LOG=BASE+login
 
 def LIST_CHANNELS():
-    url=BASE_LOG+'index.php'
-    if username=='':
-        source=source_main
-    else:
-        source=weblogin.doLogin('',username,password,url)
+    #url=BASE_LOG+'index.php'
+    url=BASE+'index.php'
+    #try:
+    #    cid=''
+    #    source_ttable=weblogin.showTtable(cid)
+    #except:
+    #    source_ttable=''
+    #xbmc.log('TimeTable: '+source_ttable)
+    #if username=='':
+    #    source=source_main
+    #else:
+    #    source=weblogin.doLogin('',username,password,url)
+    source=weblogin.openUrl(url)
     match=re.compile('<li><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
     for url_chann,thumbnail,name in match:
         thumbnail=BASE+thumbnail
         addDir(name,url_chann,1,thumbnail)
 
 def INDEX_CHANNELS(name,url):
-    if username=='':
-        url=BASE+url
-        channel_source=openUrl(url)
-    else:
-        url=BASE_LOG+'index.php'+url
-        channel_source=weblogin.doLogin('',username,password,url)
+    #if username=='':
+    #    url=BASE+url
+    url=BASE+url
+    #    channel_source=weblogin.openUrl(url)
+    #else:
+    #    url=BASE_LOG+'index.php'+url
+    #    channel_source=weblogin.doLogin('',username,password,url)
+    channel_source=weblogin.openUrl(url)
     match_link_01=re.compile('file:"(.+?)"').findall(channel_source)
-    match_link_02=re.compile('<a id="link" href=(.+?)>').findall(channel_source)
+    #match_link_02=re.compile('<a id="link" href=(.+?)>').findall(channel_source)
     name_01='PLAY: '+name
     for url_01 in match_link_01:
         addLink(name_01,url_01,'')
-    for url_02 in match_link_02:
-        url_02=BASE+url_02
-        source_alt=openUrl(url_02)
-        match_link_02=re.compile('file:"(.+?)"').findall(source_alt)
-        for url_02 in match_link_02:
-            name_02='PLAY ALT: '+name
-            addLink(name_02,url_02,'')
+    #for url_02 in match_link_02:
+    #    url_02=BASE+url_02
+    #    source_alt=weblogin.openUrl(url_02)
+    #    match_link_02=re.compile('file:"(.+?)"').findall(source_alt)
+    #    for url_02 in match_link_02:
+    #        name_02='PLAY ALT: '+name
+    #        addLink(name_02,url_02,'')
 		
 def get_params():
     param=[]
