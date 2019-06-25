@@ -7,7 +7,7 @@ import weblogin
 username=xbmcaddon.Addon().getSetting('username')
 password=xbmcaddon.Addon().getSetting('password')
 
-BASE='https://seirsanduk.online/'
+BASE='https://seirsanduk.online'
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 #login='login/'
 
@@ -17,7 +17,6 @@ header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101
 
 def LIST_CHANNELS():
     #url=BASE_LOG+'index.php'
-    url=BASE+'index.php'
     #try:
     #    cid=''
     #    source_ttable=weblogin.showTtable(cid)
@@ -31,7 +30,7 @@ def LIST_CHANNELS():
     source=weblogin.openUrl(url)
     match=re.compile('<li.*><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
     for url_chann,thumbnail,name in match:
-        thumbnail=BASE+thumbnail
+        thumbnail=BASE+'/'+thumbnail
         url_chann=BASE+url_chann
         addDir(name,url_chann,1,thumbnail)
 
