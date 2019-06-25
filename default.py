@@ -17,6 +17,7 @@ header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101
 
 def LIST_CHANNELS():
     #url=BASE_LOG+'index.php'
+    url=BASE
     #try:
     #    cid=''
     #    source_ttable=weblogin.showTtable(cid)
