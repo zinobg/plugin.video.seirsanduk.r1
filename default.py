@@ -32,12 +32,12 @@ def LIST_CHANNELS():
     match=re.compile('<li.*><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
     for url_chann,thumbnail,name in match:
         thumbnail=BASE+thumbnail
+        url_chann=BASE+url_chann
         addDir(name,url_chann,1,thumbnail)
 
 def INDEX_CHANNELS(name,url):
     #if username=='':
     #    url=BASE+url
-    url=BASE+url
     #    channel_source=weblogin.openUrl(url)
     #else:
     #    url=BASE_LOG+'index.php'+url
