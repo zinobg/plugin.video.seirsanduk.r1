@@ -29,7 +29,7 @@ def LIST_CHANNELS():
     #else:
     #    source=weblogin.doLogin('',username,password,url)
     source=weblogin.openUrl(url)
-    match=re.compile('<li><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
+    match=re.compile('<li.*><a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a><\/li>').findall(source)
     for url_chann,thumbnail,name in match:
         thumbnail=BASE+thumbnail
         addDir(name,url_chann,1,thumbnail)
