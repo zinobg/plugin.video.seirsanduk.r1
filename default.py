@@ -20,12 +20,12 @@ def LIST_CHANNELS():
         thumbnail=BASE+thumbnail
         addDir(name,url_chann,1,thumbnail)
 
-def INDEX_CHANNELS(name,url):
+def INDEX_CHANNELS(url):
     channel_source=openUrl(url)
-    match_link_01=re.compile('file:"(.+?)"').findall(channel_source)
+    url_01=re.compile('file:"(.+?)"').findall(channel_source)
+    name=re.compile('<div class="time">Сега<\/div>\n.*<div class="title">(.+?)\n<\/div>').findall(channel_source)
     name_01='PLAY: '+name
-    for url_01 in match_link_01:
-        addLink(name_01,url_01,'')
+    addLink(name_01,url_01,'')
 		
 def get_params():
     param=[]
@@ -86,6 +86,6 @@ if mode==None or url==None or len(url)<1:
     LIST_CHANNELS()
 
 elif mode==1:
-    INDEX_CHANNELS(name,url)
+    INDEX_CHANNELS(url)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
