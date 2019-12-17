@@ -20,11 +20,14 @@ def LIST_CHANNELS():
         thumbnail=BASE+thumbnail
         addDir(name_f,url_chann,1,thumbnail)
 
-def INDEX_CHANNELS(url):
+def PLAY_URL(url,name):
     channel_source=openUrl(url)
     url_01=re.compile('file:"(.+?)"').findall(channel_source)
-    name=re.compile('<div class="time">Сега<\/div>\n.*<div class="title">(.+?)\n<\/div>').findall(channel_source)
-    name_01='PLAY: '+str(name)
+    try:
+        name=re.compile('<div class="time">Сега<\/div>\n.*<div class="title">(.+?)\n<\/div>').findall(channel_source)
+    except:
+        pass
+    name_01='PLAY: '+name
     addLink(name_01,url_01,'')
 		
 def get_params():
@@ -53,8 +56,7 @@ def addLink(name,url,iconimage):
     return ok
 
 def addDir(name,url,mode,iconimage):
-    #u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
-    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
     ok=True
     liz=xbmcgui.ListItem(name,iconImage="DefaultFolder.png",thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={ "Title": name })
@@ -70,10 +72,10 @@ try:
     url=urllib.unquote_plus(params["url"])
 except:
     pass
-#ry:
-#    name=urllib.unquote_plus(params["name"])
-#except:
-#    pass
+try:
+    name=urllib.unquote_plus(params["name"])
+except:
+    pass
 try:
     mode=int(params["mode"])
 except:
@@ -87,6 +89,6 @@ if mode==None or url==None or len(url)<1:
     LIST_CHANNELS()
 
 elif mode==1:
-    INDEX_CHANNELS(url)
+    PLAY_URL(url,name)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
