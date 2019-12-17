@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-    <category label="Login information">
-        <setting id="username" type="text" label="username" default="" />
-        <setting id="password" type="text" option="hidden" label="password" enable="!eq(-1,)" default="" />
-    </category>
-</settings>
