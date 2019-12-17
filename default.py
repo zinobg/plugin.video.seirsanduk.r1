@@ -18,13 +18,13 @@ def LIST_CHANNELS():
     match=re.compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
     for url_chann,thumbnail,name_f in match:
         thumbnail=BASE+thumbnail
-        addDir(name,url_chann,1,thumbnail)
+        addDir(name_f,url_chann,1,thumbnail)
 
 def INDEX_CHANNELS(url):
     channel_source=openUrl(url)
     url_01=re.compile('file:"(.+?)"').findall(channel_source)
     name=re.compile('<div class="time">Сега<\/div>\n.*<div class="title">(.+?)\n<\/div>').findall(channel_source)
-    name_01='PLAY: '+name
+    name_01='PLAY: '+str(name)
     addLink(name_01,url_01,'')
 		
 def get_params():
@@ -53,7 +53,8 @@ def addLink(name,url,iconimage):
     return ok
 
 def addDir(name,url,mode,iconimage):
-    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+    #u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
     ok=True
     liz=xbmcgui.ListItem(name,iconImage="DefaultFolder.png",thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={ "Title": name })
@@ -69,10 +70,10 @@ try:
     url=urllib.unquote_plus(params["url"])
 except:
     pass
-try:
-    name=urllib.unquote_plus(params["name"])
-except:
-    pass
+#ry:
+#    name=urllib.unquote_plus(params["name"])
+#except:
+#    pass
 try:
     mode=int(params["mode"])
 except:
