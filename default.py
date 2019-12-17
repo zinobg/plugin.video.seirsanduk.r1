@@ -2,7 +2,7 @@
 import re,os,urllib2,urllib
 import xbmcplugin,xbmcgui,xbmcaddon
 
-BASE='http://www.seirsanduk.com'
+BASE='http://televizora.tk/'
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
 def openUrl(url):
@@ -23,12 +23,8 @@ def LIST_CHANNELS():
 def PLAY_URL(url,name):
     channel_source=openUrl(url)
     url_01=re.compile('file:"(.+?)"').findall(channel_source)
-    try:
-        name=re.compile('<div class="time">Сега<\/div>\n.*<div class="title">(.+?)\n<\/div>').findall(channel_source)
-    except:
-        pass
-    name_01='PLAY: '+name
-    addLink(name_01,url_01,'')
+    for url in url_01:
+        addLink(name,url,'')
 		
 def get_params():
     param=[]
