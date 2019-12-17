@@ -1,5 +1,5 @@
 # seirsanduk
-Video plugin for http://www.seirsanduk.com/. Free account is required.
+Video plugin for http://www.seirsanduk.com/.
 
 Readme for Kodi seirsanduk.r1 plugin created zinobg [at] gmail.com
 
