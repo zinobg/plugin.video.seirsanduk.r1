@@ -6,7 +6,6 @@ BASE='http://www.seirsanduk.com'
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
 def openUrl(url):
-    xbmc.log('t1')
     req=urllib2.Request(url)
     req.add_header('User-Agent',header_string)
     response=urllib2.urlopen(req)
@@ -16,11 +15,9 @@ def openUrl(url):
 
 def LIST_CHANNELS():
     source=openUrl(BASE)
-    xbmc.log(source)
     match=re.compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
     for url_chann,thumbnail,name_f in match:
         thumbnail=BASE+thumbnail
-        xbmx.log(name_f)
         addDir(name,url_chann,1,thumbnail)
 
 def INDEX_CHANNELS(name,url):
