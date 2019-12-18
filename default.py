@@ -4,7 +4,7 @@ import xbmcplugin,xbmcgui,xbmcaddon
 
 BASE_TK='http://televizora.tk/'
 BASE_US='http://seirsanduk.us/'
-BASE=BASE_TK
+
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
 def openUrl(url):
@@ -16,11 +16,19 @@ def openUrl(url):
     return source
 
 def LIST_CHANNELS():
-    source=openUrl(BASE)
-    match=re.compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
-    for url_chann,thumbnail,name_f in match:
-        thumbnail=BASE+thumbnail
-        addDir(name_f,url_chann,1,thumbnail)
+    try:
+        BASE=BASE_TK
+        xbmc.log("Trying: "+BASE)
+        source=openUrl(BASE)
+    except:
+        BASE=BASE_US
+        xbmc.log("Trying: "+BASE)
+        source=openUrl(BASE)
+    if source:
+        match=re.compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
+        for url_chann,thumbnail,name_f in match:
+            thumbnail=BASE+thumbnail
+            addDir(name_f,url_chann,1,thumbnail)
 
 def PLAY_URL(url,name,thumbnail):
     channel_source=openUrl(url)
@@ -56,7 +64,6 @@ def addLink(name,url,iconimage):
     return ok
 
 def addDir(name,url,mode,iconimage):
-    #u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&thumbnail="+urllib.quote_plus(iconimage)
     ok=True
     liz=xbmcgui.ListItem(name,iconImage="DefaultFolder.png",thumbnailImage=iconimage)
