@@ -2,7 +2,9 @@
 import re,os,urllib2,urllib
 import xbmcplugin,xbmcgui,xbmcaddon
 
-BASE='http://televizora.tk/'
+BASE_TK='http://televizora.tk/'
+BASE_US='http://seirsanduk.us/'
+BASE=BASE_TK
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
 def openUrl(url):
@@ -20,11 +22,13 @@ def LIST_CHANNELS():
         thumbnail=BASE+thumbnail
         addDir(name_f,url_chann,1,thumbnail)
 
-def PLAY_URL(url,name):
+def PLAY_URL(url,name,thumbnail):
     channel_source=openUrl(url)
     url_01=re.compile('file:"(.+?)"').findall(channel_source)
+    prog_01=re.compile('<div class="title">(.+?)<\/div>').findall(channel_source)
+    name_r=name+" | "+prog_01[0]
     for url in url_01:
-        addLink(name,url,'')
+        addLink(name_r,url,thumbnail)
 		
 def get_params():
     param=[]
@@ -52,7 +56,8 @@ def addLink(name,url,iconimage):
     return ok
 
 def addDir(name,url,mode,iconimage):
-    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+    #u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&thumbnail="+urllib.quote_plus(iconimage)
     ok=True
     liz=xbmcgui.ListItem(name,iconImage="DefaultFolder.png",thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={ "Title": name })
@@ -63,6 +68,7 @@ params=get_params()
 url=None
 name=None
 mode=None
+thumbnail=None
 
 try:
     url=urllib.unquote_plus(params["url"])
@@ -76,15 +82,20 @@ try:
     mode=int(params["mode"])
 except:
     pass
+try:
+    thumbnail=urllib.unquote_plus(params["thumbnail"])
+except:
+    pass
 
 xbmc.log("Mode: "+str(mode))
 xbmc.log("URL: "+str(url))
 xbmc.log("Name: "+str(name))
+xbmc.log("Icon: "+str(thumbnail))
 
 if mode==None or url==None or len(url)<1:
     LIST_CHANNELS()
 
 elif mode==1:
-    PLAY_URL(url,name)
+    PLAY_URL(url,name,thumbnail)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
