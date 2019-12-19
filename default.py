@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-import re,os,urllib2,urllib
-import xbmcplugin,xbmcgui,xbmcaddon
+import urllib2,urllib
+from re import compile as Compile
+import xbmcplugin
+from xbmcgui import ListItem as ListItem
 
 BASE_TK='http://televizora.tk/'
 BASE_US='http://seirsanduk.us/'
@@ -25,15 +27,15 @@ def LIST_CHANNELS():
         xbmc.log("Trying: "+BASE)
         source=openUrl(BASE)
     if source:
-        match=re.compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
+        match=Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
         for url_chann,thumbnail,name_f in match:
             thumbnail=BASE+thumbnail
             addDir(name_f,url_chann,1,thumbnail)
 
 def PLAY_URL(url,name,thumbnail):
     channel_source=openUrl(url)
-    url_01=re.compile('file:"(.+?)"').findall(channel_source)
-    prog_01=re.compile('<div class="title">(.+?)<\/div>').findall(channel_source)
+    url_01=Compile('file:"(.+?)"').findall(channel_source)
+    prog_01=Compile('<div class="title">(.+?)<\/div>').findall(channel_source)
     name_r=name+" | "+prog_01[0]
     for url in url_01:
         addLink(name_r,url,thumbnail)
@@ -57,7 +59,7 @@ def get_params():
 
 def addLink(name,url,iconimage):
     ok=True
-    liz=xbmcgui.ListItem(name,iconImage="DefaultVideo.png",thumbnailImage=iconimage)
+    liz=ListItem(name,iconImage="DefaultVideo.png",thumbnailImage=iconimage)
     liz.setInfo(type="Video",infoLabels={"Title":name})
     liz.setProperty('IsPlayable','true')
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
@@ -66,7 +68,7 @@ def addLink(name,url,iconimage):
 def addDir(name,url,mode,iconimage):
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&thumbnail="+urllib.quote_plus(iconimage)
     ok=True
-    liz=xbmcgui.ListItem(name,iconImage="DefaultFolder.png",thumbnailImage=iconimage)
+    liz=ListItem(name,iconImage="DefaultFolder.png",thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={ "Title": name })
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
     return ok
