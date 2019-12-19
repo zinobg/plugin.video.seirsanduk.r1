@@ -105,4 +105,4 @@ if mode==None or url==None or len(url)<1:
 elif mode==1:
     PLAY_URL(url,name,thumbnail)
 
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+xbmcplugin.endOfDirectory(int(sys.argv[1]),cacheToDisc=False)
