@@ -29,6 +29,7 @@ def LIST_CHANNELS():
         #BASE = BASE_US
         xbmc.log("Trying: " + BASE)
         source = openUrl(BASE)
+    #xbmc.log(source)
     if source:
         match = Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
         for url_chann, thumbnail, name_f in match:
@@ -42,6 +43,7 @@ def PLAY_URL(url, name, thumbnail):
     xbmc.log("Trying: " + channel_source)
     url_01 = Compile('file:"(.+?)"').findall(channel_source)
     prog_01 = Compile('<div class="title">(.+?)\n<\/div>').findall(channel_source)
+    #xbmc.log(channel_source)
     # name_r=name+" | "+prog_01[0]
     for url in url_01:
         addLink("play" + name, url, thumbnail)
