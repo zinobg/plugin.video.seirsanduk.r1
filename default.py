@@ -4,8 +4,9 @@ from re import compile as Compile
 import xbmcplugin
 from xbmcgui import ListItem as ListItem
 
-BASE_TK = 'http://televizora.tk/'
-BASE_US = 'http://seirsanduk.us/'
+#BASE_TK = 'http://televizora.tk/'
+#BASE_US = 'http://seirsanduk.us/'
+BASE='http://www.seirsanduk.com/'
 
 header_string = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
@@ -21,17 +22,18 @@ def openUrl(url):
 
 def LIST_CHANNELS():
     try:
-        BASE = BASE_TK
+        #BASE = BASE_TK
         xbmc.log("Trying: " + BASE)
         source = openUrl(BASE)
     except:
-        BASE = BASE_US
+        #BASE = BASE_US
         xbmc.log("Trying: " + BASE)
         source = openUrl(BASE)
     if source:
         match = Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
         for url_chann, thumbnail, name_f in match:
             thumbnail = BASE + thumbnail
+            url_chann='http:'+url_chann
             addDir(name_f, url_chann, 1, thumbnail)
 
 
