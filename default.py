@@ -38,7 +38,7 @@ def LIST_CHANNELS():
             addDir(name_f, url_chann, 1, thumbnail)
 
 
-def PLAY_URL(url, name, thumbnail):
+def PLAY_URL(name,url,thumbnail):
     channel_source = openUrl(url)
     xbmc.log("Trying: " + channel_source)
     url_01 = Compile('file:"(.+?)"').findall(channel_source)
@@ -117,6 +117,6 @@ if mode == None or url == None or len(url) < 1:
     LIST_CHANNELS()
 
 elif mode == 1:
-    PLAY_URL(url, name, thumbnail)
+    PLAY_URL(name,url,thumbnail)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
