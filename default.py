@@ -5,7 +5,6 @@ import xbmcplugin
 from xbmcgui import ListItem as ListItem
 
 BASE='http://www.seirsanduk.com/'
-
 header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
 def openUrl(url):
@@ -15,6 +14,7 @@ def openUrl(url):
     source=response.read()
     response.close()
     return source
+
 
 def LIST_CHANNELS():
     source=openUrl(BASE)
@@ -51,6 +51,7 @@ def get_params():
 
 def addLink(name,url,iconimage):
     ok=True
+    xbmc.log('dir '+sys.argv[1])
     liz=ListItem(name, iconImage="DefaultVideo.png",thumbnailImage=iconimage)
     liz.setInfo(type="Video",infoLabels={"Title":name})
     liz.setProperty('IsPlayable','true')
@@ -60,6 +61,7 @@ def addLink(name,url,iconimage):
 def addDir(name,url,mode,iconimage):
     u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&thumbnail="+urllib.quote_plus(iconimage)
     ok=True
+    xbmc.log('dir '+sys.argv[1])
     liz=ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo(type="Video",infoLabels={"Title":name})
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
