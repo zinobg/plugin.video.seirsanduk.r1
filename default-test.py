@@ -3,44 +3,45 @@ import urllib2, urllib
 from re import compile as Compile
 import xbmcplugin
 from xbmcgui import ListItem as ListItem
+from xbmcswift2 import Plugin
 
-BASE='http://www.seirsanduk.com/'
-header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
-
-def openUrl(url):
-    req=urllib2.Request(url)
-    req.add_header('User-Agent',header_string)
-    response=urllib2.urlopen(req)
-    source=response.read()
-    response.close()
-    return source
+plugin = Plugin()
 
 class Channel(object):
-    def __init__(self,name,url,thumbnail):
-        self.name=name
-        self.url=url
-        self.thumbnail=thumbnail
-        
-    def addDir(self):
-        print ('['+self.thumbnail+'] --> '+self.name+' URL:'+self.url)
-        self.liz=ListItem(self.name, iconImage="DefaultFolder.png", thumbnailImage=self.thumbnail)
-        self.liz.setInfo(type="Video",infoLabels={"Title":self.name})
-        xbmcplugin.addDirectoryItem(int(sys.argv[1]),self.url,self.liz,isFolder=True)        
-        #self.play_video(name)
-        
-    def play_video(self,name):
-        print('Playing video -> '+self.name)
-        
+    def __init__(self):
+        self.base='http://www.seirsanduk.com/'
+        self.header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
+        self.name=None
+        self.url=None
+        self.thumbnail=None
+        plugin.run()
+    def openUrl(self,url):
+        req=urllib2.Request(url)
+        req.add_header('User-Agent',self.header_string)
+        response=urllib2.urlopen(req)
+        source=response.read()
+        response.close()
+        return source
+    @plugin.route('/')
+    def run(self):
+        source=self.openUrl(self.base)
+        if source:
+            xbmc.log('Listing channels ...')
+            match=Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
+            for self.url, self.thumbnail, self.name in match:
+                self.url='http:'+self.url
+                self.thumbnail=self.base+self.thumbnail
+                liz=ListItem(self.name, iconImage="DefaultFolder.png", thumbnailImage=self.thumbnail)
+                liz.setInfo(type="Video",infoLabels={"Title":self.name})
+                xbmcplugin.addDirectoryItem(int(sys.argv[1]),self.url,liz,isFolder=True)
+            xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
 
-source=openUrl(BASE)
-if source:
-    match=Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
-    for url, thumbnail, name in match:
-        url='http:'+url
-        thumbnail=BASE+thumbnail
-        r1=Channel(name,url,thumbnail)
-        r1.addDir()
-xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+
+if __name__ == '__main__':
+    channels=Channel()
+    #channels.run()
+    #plugin.run()
+
 
 
 
