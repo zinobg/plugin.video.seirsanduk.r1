@@ -2,10 +2,10 @@
 from urllib2 import Request,urlopen
 from re import compile as Compile
 from xbmc import log
+from xbmcgui import Dialog
 from xbmcswift2 import Plugin
 
 BASE='http://www.seirsanduk.com/'
-header_string='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
 
 plugin=Plugin()
 
@@ -15,27 +15,26 @@ def index():
     items=[]
     source=openUrl(BASE)
     match=Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
-    for url_chann,thumbnail,name_f in match:
+    for url,thumbnail,name in match:
         thumbnail=BASE+thumbnail
-        url_chann='http:'+url_chann
-        item={'label':name_f,'thumbnail':thumbnail,'path':plugin.url_for('index_source',url=url_chann,name=name_f,icon=thumbnail)}
+        url='http:'+url
+        item={'label':name,'thumbnail':thumbnail,'path':plugin.url_for('index_source',url=url,name=name,icon=thumbnail)}
         items.append(item)
     return items     
  
 @plugin.route('/stream/<url>/<name>/<icon>/')
 def index_source(url,name,icon):
-    log('path: [/stream/]')
-    items=[]
+    log('path: [/stream/'+name+'/'+icon+']')
     source=openUrl(url)
     match=Compile('file:"(.+?)"').findall(source)
-    for url in match:
-        item={'label':'Play: '+name,'thumbnail':icon,'path':url,'is_playable':True}
-        items.append(item)
-    return plugin.finish(items)
+    item={'label':name,'path':match[0]}
+    plugin.play_video(item)
+    Dialog().notification(name,'',icon,10000,sound=False)
+    return plugin.set_resolved_url()
     
 def openUrl(url):
     req=Request(url)
-    req.add_header('User-Agent',header_string)
+    req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0')
     response=urlopen(req)
     source=response.read()
     response.close()
