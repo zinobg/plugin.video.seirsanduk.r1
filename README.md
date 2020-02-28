@@ -10,8 +10,4 @@ How to install:
     2. Run Kodi and go to System -> Add-ons
     3. From Add-ons menu select -> Install from zip file
     4. Select the zip file plugin.video.seirsanduk.r1.zip
-<<<<<<< HEAD
     5. SEIRSANDUK R1 add-on will appear in the video addon list
-=======
-    5. SEIRSANDUK R1 add-on will appear in the video addon list
->>>>>>> 64b2b58e054e1f7cb9686d1cd401fa44583d9568
