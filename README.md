@@ -4,8 +4,9 @@ Readme for Kodi - plugin.video.seirsanduk.r1 - plugin created by zinobg [at] gma
 
 I created this addon to be able to watch online TV via Kodi on my Raspberry pi3. It is tested on Kodi for Windows as well. 
 
-How to install:
+Requires: script.module.xbmcswift2
 
+How to install:
     1. Copy the zip file plugin.video.seirsanduk.r1.zip to a directory, where Kodi server has access 
     2. Run Kodi and go to System -> Add-ons
     3. From Add-ons menu select -> Install from zip file
