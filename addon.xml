@@ -2,20 +2,20 @@
 <addon id="plugin.video.seirsanduk.r1" name="SEIRSANDUK R1" version="4.1" provider-name="zynobg [at] gmail.com">
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
-	<import addon="script.module.xbmcswift2" version="1.1.1" />
+    <import addon="script.module.xbmcswift2" version="1.1.1" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-   <platform>all</platform>
-   <license>GNU GENERAL PUBLIC LICENSE. Version 3</license>
-   <summary lang="en"></summary>
-   <language>en</language>
-   <description lang="en">www.SEIRSANDUK.com</description>
-   <disclaimer lang="en">www.SEIRSANDUK.com</disclaimer>
-   <website>www.SEIRSANDUK.com</website>
-   <platform>all</platform>
-   <source>git://github.com/zinobg/plugin.video.seirsanduk.r1.git</source>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3</license>
+    <summary lang="en"></summary>
+    <language>en</language>
+    <description lang="en">www.SEIRSANDUK.com</description>
+    <disclaimer lang="en">www.SEIRSANDUK.com</disclaimer>
+    <website>www.SEIRSANDUK.com</website>
+    <platform>all</platform>
+    <source>git://github.com/zinobg/plugin.video.seirsanduk.r1.git</source>
   </extension>
 </addon>
