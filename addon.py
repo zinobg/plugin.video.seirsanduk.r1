@@ -20,17 +20,17 @@ def index():
         url='http:'+url
         item={'label':name,'thumbnail':thumbnail,'path':plugin.url_for('index_source',url=url,name=name,icon=thumbnail)}
         items.append(item)
-    return items     
+    return plugin.finish(items)
  
 @plugin.route('/stream/<url>/<name>/<icon>/')
 def index_source(url,name,icon):
-    log('path: [/stream/'+name+'/'+icon+']')
+    log('path: [/stream/'+url+'/'+name+'/'+icon+']')
     source=openUrl(url)
     match=Compile('file:"(.+?)"').findall(source)
     item={'label':name,'path':match[0]}
     plugin.play_video(item)
-    Dialog().notification(name,'',icon,10000,sound=False)
-    return plugin.set_resolved_url()
+    Dialog().notification(name,'',icon,8000,sound=False)
+    return plugin.finish(None,succeeded=False)
     
 def openUrl(url):
     req=Request(url)

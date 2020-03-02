@@ -9,13 +9,13 @@
   </extension>
   <extension point="xbmc.addon.metadata">
    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 3</license>
+   <license>GNU GENERAL PUBLIC LICENSE. Version 3</license>
    <summary lang="en"></summary>
    <language>en</language>
    <description lang="en">www.SEIRSANDUK.com</description>
    <disclaimer lang="en">www.SEIRSANDUK.com</disclaimer>
    <website>www.SEIRSANDUK.com</website>
    <platform>all</platform>
-   <source>https://github.com/zinobg/plugin.video.seirsanduk.r1</source>
+   <source>git://github.com/zinobg/plugin.video.seirsanduk.r1.git</source>
   </extension>
 </addon>
