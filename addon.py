@@ -15,11 +15,7 @@ def index():
     items=[]
     source=openUrl(BASE)
     match=Compile('<a href="(.+?)"><img src="(.+?)".*>(.+?)<\/a').findall(source)
-    for url,thumbnail,name in match:
-        thumbnail=BASE+thumbnail
-        url='http:'+url
-        item={'label':name,'thumbnail':thumbnail,'path':plugin.url_for('index_source',url=url,name=name,icon=thumbnail)}
-        items.append(item)
+    items=[{'label':name,'thumbnail':BASE+thumbnail,'path':plugin.url_for('index_source',url='http:'+url,name=name,icon=BASE+thumbnail)} for url,thumbnail,name in match]
     return plugin.finish(items)
  
 @plugin.route('/stream/<url>/<name>/<icon>/')
