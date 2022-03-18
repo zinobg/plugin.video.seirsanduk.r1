@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-import urllib2
+import urllib
 from re import compile as Compile
 from xbmc import log
 from xbmcgui import Dialog
 from xbmcswift2 import Plugin
 
-BASE=['http://www.seirsanduk.us/','http://www.seirsanduk.online']
+BASE=['http://www.seir-sanduk.com/']
 
-header='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
+
+header='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/59.0'
 
 plugin=Plugin()
 
-opener=urllib2.build_opener(urllib2.HTTPHandler,urllib2.HTTPRedirectHandler())
-urllib2.install_opener(opener)
+opener=urllib.request.build_opener(urllib.request.HTTPHandler,urllib.request.HTTPRedirectHandler())
+urllib.request.install_opener(opener)
 
 @plugin.route('/')
 def index():
@@ -27,12 +28,13 @@ def index():
         if not match:
             continue
         break
-    items=[{'label':name,'thumbnail':B+thumbnail,'path':plugin.url_for('index_source',url='http:'+url,name=name,icon=B+thumbnail)} for url,thumbnail,name in match]
+    items=[{'label':name,'thumbnail':B+thumbnail,'path':plugin.url_for('index_source',url=url,name=name,icon=B+thumbnail)} for url,thumbnail,name in match]
     return plugin.finish(items)
  
 @plugin.route('/stream/<url>/<name>/<icon>/')
 def index_source(url,name,icon):
     log('path: [/stream/'+url+'/'+name+'/'+icon+']')
+    log('url:'+url)
     source=openUrl(url)
     match=Compile('file:"(.+?)"').findall(source)
     item={'label':name,'path':match[0]}
@@ -41,10 +43,10 @@ def index_source(url,name,icon):
     return plugin.finish(None,succeeded=False)
    
 def openUrl(url):
-    req=urllib2.Request(url)
+    req=urllib.request.Request(url)
     req.add_header('User-Agent',header)
-    response=urllib2.urlopen(req)
-    source=response.read()
+    response=urllib.request.urlopen(req)
+    source=response.read().decode('utf-8')
     response.close()
     return source
 
